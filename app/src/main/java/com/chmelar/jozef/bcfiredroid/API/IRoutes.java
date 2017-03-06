@@ -9,4 +9,6 @@ import retrofit2.http.POST;
 public interface IRoutes {
     @POST("login")
     Observable<LoginResponse> login(@Body LoginRequest loginResponse);
+    @POST("register")
+    Observable<LoginResponse> register(@Body LoginRequest loginResponse);
 }

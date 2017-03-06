@@ -7,6 +7,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.chmelar.jozef.bcfiredroid.R;
 
@@ -48,6 +49,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     @Override
     public void setEmailFormatError() {
         etEmail.setError("invalid mail");
+    }
+
+    @Override
+    public void displayNetworkingError() {
+        Toast.makeText(this, "Error while getting data", Toast.LENGTH_SHORT).show();
     }
 
     @Override

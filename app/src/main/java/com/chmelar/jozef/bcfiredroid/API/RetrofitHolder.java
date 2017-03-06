@@ -1,8 +1,6 @@
 package com.chmelar.jozef.bcfiredroid.API;
 
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import okhttp3.OkHttpClient;
@@ -19,6 +17,7 @@ public class RetrofitHolder {
             .newBuilder()
             .addInterceptor(interceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
             .build();
+    private IRoutes bcDroidService;
 
     private RetrofitHolder() {
         this.retrofit = new Retrofit.Builder()
@@ -27,12 +26,18 @@ public class RetrofitHolder {
                 .addConverterFactory(MoshiConverterFactory.create())
                 .client(client)
                 .build();
+        bcDroidService = retrofit.create(IRoutes.class);
     }
 
-    public static synchronized IRoutes getClient() {
+    public static  RetrofitHolder getClient() {
         if (retrofit == null) {
             ourInstance = new RetrofitHolder();
-            return ourInstance.retrofit.create(IRoutes.class);
-        } else return ourInstance.retrofit.create(IRoutes.class);
+            return ourInstance;
+        } else return ourInstance;
     }
+
+    public IRoutes getBcDroidService(){
+        return bcDroidService;
+    }
+
 }

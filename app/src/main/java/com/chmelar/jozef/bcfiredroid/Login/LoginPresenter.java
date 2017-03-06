@@ -6,6 +6,7 @@ import android.util.Log;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginRequest;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
 import com.chmelar.jozef.bcfiredroid.API.RetrofitHolder;
+import com.chmelar.jozef.bcfiredroid.Util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,8 +25,8 @@ public class LoginPresenter {
     }
 
     public void login(String email, String password) {
-        if (validateEmail(email))
-            RetrofitHolder.getClient().login(new LoginRequest(email, password))
+        if (Util.isEmailValid(email))
+            RetrofitHolder.getClient().getBcDroidService().login(new LoginRequest(email, password))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .take(1)
@@ -37,27 +38,23 @@ public class LoginPresenter {
 
                         @Override
                         public void onNext(LoginResponse value) {
-                            view.toggleLoadingAnimation();
                             Log.d(TAG, "onNext: ");
                         }
 
                         @Override
                         public void onError(Throwable e) {
+                            view.displayNetworkingError();
                             Log.d(TAG, "onError: " + e.toString());
                         }
 
                         @Override
                         public void onComplete() {
+                            view.toggleLoadingAnimation();
 
                         }
                     });
         else view.setEmailFormatError();
     }
 
-    private boolean validateEmail(String email) {
-        String emailPattern = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-        Pattern p = Pattern.compile(emailPattern);
-        Matcher m = p.matcher(email);
-        return m.matches();
-    }
+
 }

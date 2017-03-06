@@ -6,6 +6,8 @@ public interface ILoginView {
 
     void setEmailFormatError();
 
+    void displayNetworkingError();
+
     void goToMainScreen();
 
     void registerScreen();
