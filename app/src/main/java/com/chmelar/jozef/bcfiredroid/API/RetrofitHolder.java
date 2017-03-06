@@ -11,20 +11,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
 public class RetrofitHolder {
-    private static final String BASE_URL = "https://bcdroid.herokuapp.com/";
+    private  final String BASE_URL = "https://bcdroid.herokuapp.com/";
     private static RetrofitHolder ourInstance;
     private static Retrofit retrofit;
-    private static Gson gson;
-    private static HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-    private static OkHttpClient client = new OkHttpClient()
+    private  HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+    private  OkHttpClient client = new OkHttpClient()
             .newBuilder()
             .addInterceptor(interceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
             .build();
 
     private RetrofitHolder() {
-        this.gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                .create();
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
