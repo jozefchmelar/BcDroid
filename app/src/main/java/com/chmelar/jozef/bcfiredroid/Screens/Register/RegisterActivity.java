@@ -1,4 +1,4 @@
-package com.chmelar.jozef.bcfiredroid.Register;
+package com.chmelar.jozef.bcfiredroid.Screens.Register;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.chmelar.jozef.bcfiredroid.App;
 import com.chmelar.jozef.bcfiredroid.R;
 
 import butterknife.BindView;
@@ -33,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
-        presenter = new RegisterPresenter(this);
+        presenter = new RegisterPresenter(this,((App)getApplicationContext()).getClient());
     }
 
     @Override

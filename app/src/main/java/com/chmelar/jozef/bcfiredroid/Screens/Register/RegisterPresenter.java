@@ -1,34 +1,36 @@
-package com.chmelar.jozef.bcfiredroid.Login;
-
+package com.chmelar.jozef.bcfiredroid.Screens.Register;
 
 import android.util.Log;
 
-import com.chmelar.jozef.bcfiredroid.API.Model.LoginRequest;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
+import com.chmelar.jozef.bcfiredroid.API.Model.RegisterRequest;
 import com.chmelar.jozef.bcfiredroid.API.RetrofitHolder;
 import com.chmelar.jozef.bcfiredroid.Util;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.OkHttpClient;
 
-public class LoginPresenter {
-    private ILoginView view;
-    private String TAG = "loginPresenter";
+public class RegisterPresenter {
 
-    public LoginPresenter(ILoginView view) {
+    private static final String TAG = "RegisterPresenter";
+    private    IRegisterView view;
+    private OkHttpClient client;
+
+    public RegisterPresenter(IRegisterView view, OkHttpClient client) {
         this.view = view;
+        this.client=client;
     }
 
-    public void login(String email, String password) {
-        if (Util.isEmailValid(email))
-            RetrofitHolder.getClient().getBcDroidService().login(new LoginRequest(email, password))
-                    .subscribeOn(Schedulers.io())
+    public void register(String email, String password, String repeatedPassword) {
+        if (passwordsAreEqual(password, repeatedPassword) && validateEmail(email))
+            RetrofitHolder.getInstance()
+                    .getBcDroidService(client)
+                    .register(new RegisterRequest(email, password))
                     .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
                     .take(1)
                     .subscribe(new Observer<LoginResponse>() {
                         @Override
@@ -38,23 +40,32 @@ public class LoginPresenter {
 
                         @Override
                         public void onNext(LoginResponse value) {
-                            Log.d(TAG, "onNext: ");
+                            Log.d(TAG, "onNext: " + value.toString());
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            view.displayNetworkingError();
                             Log.d(TAG, "onError: " + e.toString());
                         }
 
                         @Override
                         public void onComplete() {
                             view.toggleLoadingAnimation();
-
                         }
                     });
-        else view.setEmailFormatError();
     }
 
+    private boolean validateEmail(String email) {
+        if (!Util.isEmailValid(email)) {
+            view.setMailFormatError();
+            return false;
+        } else {
+            return true;
+        }
 
+    }
+
+    private boolean passwordsAreEqual(String password, String repeatedPassword) {
+        return password.equals(repeatedPassword);
+    }
 }

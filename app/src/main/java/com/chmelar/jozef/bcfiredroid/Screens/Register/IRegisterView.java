@@ -1,4 +1,4 @@
-package com.chmelar.jozef.bcfiredroid.Register;
+package com.chmelar.jozef.bcfiredroid.Screens.Register;
 
 
 public interface IRegisterView {
