@@ -39,11 +39,7 @@ public class App extends Application {
                 return r;
             }
         }).build();
-        Log.d(TAG, "addToken:" + client.toString());
-
     }
-
-    public LoginResponse loggedUser;
 
     @Override
     public void onCreate() {

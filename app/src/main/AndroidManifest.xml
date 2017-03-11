@@ -46,7 +46,9 @@
 
         <activity android:name=".Screens.Register.RegisterActivity">
         </activity>
-        <activity android:name=".Screens.Projects.ProjectsActivity">
+        <activity android:name=".Screens.Projects.ProjectsActivity"
+                 >
+
         </activity>
     </application>
 

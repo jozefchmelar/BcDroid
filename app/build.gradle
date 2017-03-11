@@ -53,11 +53,18 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.android.support:palette-v7:25.0.1'
+
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.jakewharton.rxbinding:rxbinding:1.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta5'
+    compile 'eu.inloop:simplerecycleradapter:0.3.2'
+    compile 'jp.wasabeef:recyclerview-animators:2.2.5'
+
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile 'com.android.support:recyclerview-v7:25.2.0'
 }
 
 

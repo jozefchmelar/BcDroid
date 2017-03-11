@@ -12,4 +12,8 @@ public class LoginResponse implements Serializable {
 
     public LoginResponse() {
     }
+
+    public String getFullName(){
+        return this.user.getFirstName() + " " + this.user.getLastName();
+    }
 }

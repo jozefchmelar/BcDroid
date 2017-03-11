@@ -12,6 +12,7 @@ public class User implements Serializable {
     private String email;
     private String lastName;
     private String firstName;
+    //LinkedList cause List is not implementing Serializable
     private LinkedList<Integer> projects;
 
     public User() {

@@ -4,8 +4,12 @@ import android.util.Log;
 
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginRequest;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
+import com.chmelar.jozef.bcfiredroid.API.Model.Project;
+import com.chmelar.jozef.bcfiredroid.API.Model.User;
 import com.chmelar.jozef.bcfiredroid.API.RetrofitHolder;
 import com.chmelar.jozef.bcfiredroid.Util;
+
+import java.util.LinkedList;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -42,6 +46,7 @@ public class LoginPresenter {
                         @Override
                         public void onError(Throwable e) {
                             view.displayNetworkingError();
+                            view.toggleLoadingAnimation();
                             Log.d(TAG, "onError: " + e.toString());
                         }
 
@@ -52,6 +57,8 @@ public class LoginPresenter {
                     });
         else view.setEmailFormatError();
     }
+
+
 
 
 }

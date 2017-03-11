@@ -2,6 +2,7 @@ package com.chmelar.jozef.bcfiredroid.API;
 
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginRequest;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
+import com.chmelar.jozef.bcfiredroid.API.Model.Project;
 import com.chmelar.jozef.bcfiredroid.API.Model.User;
 
 import io.reactivex.Observable;
@@ -18,4 +19,7 @@ public interface IRoutes {
 
     @GET("employee/{id}")
     Observable<User> getUser(@Path("id") int id);
+
+    @GET("project/{id}")
+    Observable<Project> getProject(@Path("id")int id);
 }

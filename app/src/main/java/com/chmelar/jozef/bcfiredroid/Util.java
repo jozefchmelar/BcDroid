@@ -1,6 +1,9 @@
 package com.chmelar.jozef.bcfiredroid;
 
 
+import android.app.Activity;
+import android.view.inputmethod.InputMethodManager;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,5 +14,9 @@ public class Util {
         Pattern p = Pattern.compile(emailPattern);
         Matcher m = p.matcher(email);
         return m.matches();
+    }
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 }
