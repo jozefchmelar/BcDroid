@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
-        presenter = new RegisterPresenter(this,((App)getApplicationContext()).getClient());
+        presenter = new RegisterPresenter(this,((App)getApplicationContext()).getApi());
     }
 
     @Override

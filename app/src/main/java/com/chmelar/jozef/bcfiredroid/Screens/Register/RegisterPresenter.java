@@ -2,32 +2,30 @@ package com.chmelar.jozef.bcfiredroid.Screens.Register;
 
 import android.util.Log;
 
+import com.chmelar.jozef.bcfiredroid.API.IRoutes;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
 import com.chmelar.jozef.bcfiredroid.API.Model.RegisterRequest;
-import com.chmelar.jozef.bcfiredroid.API.RetrofitHolder;
 import com.chmelar.jozef.bcfiredroid.Util;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.OkHttpClient;
 
 public class RegisterPresenter {
 
     private static final String TAG = "RegisterPresenter";
-    private    IRegisterView view;
-    private OkHttpClient client;
+    private IRegisterView view;
+    private IRoutes client;
 
-    public RegisterPresenter(IRegisterView view, OkHttpClient client) {
+    public RegisterPresenter(IRegisterView view, IRoutes client) {
         this.view = view;
-        this.client=client;
+        this.client = client;
     }
 
     public void register(String email, String password, String repeatedPassword) {
         if (passwordsAreEqual(password, repeatedPassword) && validateEmail(email))
-            RetrofitHolder.getInstance()
-                    .getBcDroidService(client)
+            client
                     .register(new RegisterRequest(email, password))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())

@@ -1,37 +1,28 @@
 package com.chmelar.jozef.bcfiredroid.Screens.Projects;
 
 
-import android.util.Log;
-
+import com.chmelar.jozef.bcfiredroid.API.IRoutes;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
 import com.chmelar.jozef.bcfiredroid.API.Model.Project;
 import com.chmelar.jozef.bcfiredroid.API.Model.User;
-import com.chmelar.jozef.bcfiredroid.API.RetrofitHolder;
-
-import java.util.LinkedList;
-import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.OkHttpClient;
 
 public class ProjectsPresenter {
 
     private IProjectsView view;
-    private OkHttpClient client;
-    private String TAG = this.getClass().getName().toUpperCase();
+    private IRoutes client;
 
-    public ProjectsPresenter(IProjectsView view, OkHttpClient client) {
+    public ProjectsPresenter(IProjectsView view, IRoutes api) {
         this.view = view;
-        this.client = client;
+        this.client = api;
     }
 
     public void getProjectData(LoginResponse LoginResponse) {
-        RetrofitHolder
-                .getInstance()
-                .getBcDroidService(client)
+        client
                 .getUser(LoginResponse.getUser().get_id())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -64,10 +55,7 @@ public class ProjectsPresenter {
     }
 
     private void getUserProject(int id) {
-        final List<Project> projects = new LinkedList<>();
-        RetrofitHolder
-                .getInstance()
-                .getBcDroidService(client)
+        client
                 .getProject(id)
                 .take(1)
                 .subscribeOn(Schedulers.io())
@@ -93,4 +81,5 @@ public class ProjectsPresenter {
                     }
                 });
     }
+
 }

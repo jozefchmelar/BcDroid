@@ -4,25 +4,42 @@ package com.chmelar.jozef.bcfiredroid;
 import android.app.Application;
 import android.util.Log;
 
-import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
+import com.chmelar.jozef.bcfiredroid.API.IRoutes;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.IOException;
 
+import lombok.val;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class App extends Application {
     private static final String TAG = "App";
+    private final String BASE_URL = "https://bcdroid.herokuapp.com/";
+
     private HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     private OkHttpClient client;
-    private Cache cache;
+    private IRoutes bcDroidService;
 
-    public OkHttpClient getClient() {
-        return client;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        val cache = new Cache(getCacheDir(), 2048);
+        //region client and retrofit crea
+        client = new OkHttpClient()
+                .newBuilder()
+                .addInterceptor(interceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
+                .cache(cache)
+                .build();
+
+        createApiService(client);
     }
 
     public void addToken(final String token) {
@@ -35,20 +52,23 @@ public class App extends Application {
                         .header("x-access-token", token)
                         .header("Content-Type", "application/json")
                         .build();
-                Response r = chain.proceed(newRequest);
-                return r;
+                return chain.proceed(newRequest);
             }
         }).build();
+
+        createApiService(client);
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        cache = new Cache(getCacheDir(), 2048);
-        client = new OkHttpClient()
-                .newBuilder()
-                .addInterceptor(interceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
-                .cache(cache)
-                .build();
+    public IRoutes getApi() {
+        return bcDroidService;
+    }
+
+    private void createApiService(OkHttpClient client) {
+        bcDroidService = new Retrofit.Builder().baseUrl(BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+                .create(IRoutes.class);
     }
 }

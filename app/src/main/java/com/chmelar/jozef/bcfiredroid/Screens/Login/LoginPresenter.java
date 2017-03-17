@@ -2,33 +2,28 @@ package com.chmelar.jozef.bcfiredroid.Screens.Login;
 
 import android.util.Log;
 
+import com.chmelar.jozef.bcfiredroid.API.IRoutes;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginRequest;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
-import com.chmelar.jozef.bcfiredroid.API.Model.Project;
-import com.chmelar.jozef.bcfiredroid.API.Model.User;
-import com.chmelar.jozef.bcfiredroid.API.RetrofitHolder;
 import com.chmelar.jozef.bcfiredroid.Util;
-
-import java.util.LinkedList;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.OkHttpClient;
 
 public class LoginPresenter {
     private ILoginView view;
     private String TAG = "loginPresenter";
-    private OkHttpClient client;
-    public LoginPresenter(ILoginView view, OkHttpClient client) {
+    private IRoutes client;
+    public LoginPresenter(ILoginView view, IRoutes client) {
         this.view = view;
         this.client = client;
     }
 
     public void login(String email, String password) {
         if (Util.isEmailValid(email))
-            RetrofitHolder.getInstance().getBcDroidService(client).login(new LoginRequest(email, password))
+           client.login(new LoginRequest(email, password))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .take(1)

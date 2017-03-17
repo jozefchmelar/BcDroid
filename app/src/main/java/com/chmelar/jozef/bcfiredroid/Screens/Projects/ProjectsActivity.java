@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -42,7 +43,7 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_projects);
         ButterKnife.bind(this);
-        presenter = new ProjectsPresenter(this, ((App) getApplicationContext()).getClient());
+        presenter = new ProjectsPresenter(this, ((App) getApplicationContext()).getApi());
         final LoginResponse loginResponse = (LoginResponse) getIntent().getSerializableExtra("LoginResponse");
 //        getSupportActionBar().setTitle(loginResponse.getFullName());
 
@@ -66,7 +67,7 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
             @NonNull
             @Override
             protected SettableViewHolder<Project> onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new ProjectDetailViewHolder(activity, R.layout.project_detail, parent);
+                return new ProjectDetailViewHolder(activity, R.layout.project_card, parent);
             }
         });
         projectsListView.setItemAnimator(new FadeInAnimator(new OvershootInterpolator(1f)));
@@ -106,6 +107,12 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
     @Override
     public void toast(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void TEST(Object value) {
+        Log.d(TAG, "TEST: "+value.toString());
+        Log.d(TAG, "TEST: ");
     }
 
     @Override
