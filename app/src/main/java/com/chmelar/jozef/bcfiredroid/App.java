@@ -43,7 +43,6 @@ public class App extends Application {
     }
 
     public void addToken(final String token) {
-        Log.d(TAG, "addToken: pridany token");
         client = client.newBuilder().addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {

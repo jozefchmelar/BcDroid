@@ -3,6 +3,7 @@ package com.chmelar.jozef.bcfiredroid.Screens.Projects;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.chmelar.jozef.bcfiredroid.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import eu.inloop.simplerecycleradapter.ItemClickListener;
 import eu.inloop.simplerecycleradapter.SettableViewHolder;
 import eu.inloop.simplerecycleradapter.SimpleRecyclerAdapter;
@@ -32,6 +34,8 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
     RecyclerView projectsListView;
     @BindView(R.id.projectsRefresh)
     SwipeRefreshLayout projectsRefresh;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
 
     private ProjectsPresenter presenter;
@@ -109,14 +113,15 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void TEST(Object value) {
-        Log.d(TAG, "TEST: "+value.toString());
-        Log.d(TAG, "TEST: ");
-    }
 
     @Override
     public void onItemClick(@NonNull Project item, @NonNull SettableViewHolder<Project> viewHolder, @NonNull View view) {
+        Log.d(TAG, "onItemClick: "+item.toString());
+        toast(item.toString());
+    }
 
+    @OnClick(R.id.fab)
+    public void onClick() {
+        toast("fab");
     }
 }

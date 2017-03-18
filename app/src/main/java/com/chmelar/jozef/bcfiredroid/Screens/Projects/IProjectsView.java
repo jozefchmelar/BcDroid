@@ -9,6 +9,4 @@ public interface IProjectsView {
     void sortListView();
     void addProject(Project value);
     void toast(String s);
-
-    void TEST(Object value);
 }
