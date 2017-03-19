@@ -16,7 +16,7 @@ import com.chmelar.jozef.bcfiredroid.App;
 import com.chmelar.jozef.bcfiredroid.R;
 import com.chmelar.jozef.bcfiredroid.Screens.Projects.ProjectsActivity;
 import com.chmelar.jozef.bcfiredroid.Screens.Register.RegisterActivity;
-import com.chmelar.jozef.bcfiredroid.Util;
+import com.chmelar.jozef.bcfiredroid.Util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

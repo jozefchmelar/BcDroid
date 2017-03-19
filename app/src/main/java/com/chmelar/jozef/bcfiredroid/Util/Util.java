@@ -1,4 +1,4 @@
-package com.chmelar.jozef.bcfiredroid;
+package com.chmelar.jozef.bcfiredroid.Util;
 
 
 import android.app.Activity;

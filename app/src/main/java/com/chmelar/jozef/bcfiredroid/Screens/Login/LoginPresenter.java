@@ -5,7 +5,7 @@ import android.util.Log;
 import com.chmelar.jozef.bcfiredroid.API.IRoutes;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginRequest;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
-import com.chmelar.jozef.bcfiredroid.Util;
+import com.chmelar.jozef.bcfiredroid.Util.Util;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

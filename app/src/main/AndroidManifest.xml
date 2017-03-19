@@ -13,7 +13,10 @@
         android:theme="@style/AppTheme">
         <uses-permission android:name="android.permission.INTERNET"/>
 
-        <activity android:name=".Screens.Login.LoginActivity">
+        <activity
+            android:name=".Screens.Login.LoginActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -46,9 +49,13 @@
 
         <activity android:name=".Screens.Register.RegisterActivity">
         </activity>
-        <activity android:name=".Screens.Projects.ProjectsActivity"
-                 >
+        <activity android:name=".Screens.Projects.ProjectsActivity">
+        </activity>
+        <activity
+            android:name=".Screens.Project.ProjectActivity"
+            android:windowSoftInputMode="adjustResize"
 
+            >
         </activity>
     </application>
 

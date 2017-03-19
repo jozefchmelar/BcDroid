@@ -1,6 +1,7 @@
 package com.chmelar.jozef.bcfiredroid.Screens.Projects;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,7 @@ import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
 import com.chmelar.jozef.bcfiredroid.API.Model.Project;
 import com.chmelar.jozef.bcfiredroid.App;
 import com.chmelar.jozef.bcfiredroid.R;
+import com.chmelar.jozef.bcfiredroid.Screens.Project.ProjectActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +28,7 @@ import eu.inloop.simplerecycleradapter.ItemClickListener;
 import eu.inloop.simplerecycleradapter.SettableViewHolder;
 import eu.inloop.simplerecycleradapter.SimpleRecyclerAdapter;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
+import lombok.val;
 
 public class ProjectsActivity extends AppCompatActivity implements IProjectsView, ItemClickListener<Project> {
 
@@ -116,8 +119,8 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
 
     @Override
     public void onItemClick(@NonNull Project item, @NonNull SettableViewHolder<Project> viewHolder, @NonNull View view) {
-        Log.d(TAG, "onItemClick: "+item.toString());
-        toast(item.toString());
+        val intent = new Intent(this, ProjectActivity.class);
+        startActivity(intent.putExtra("project", item));
     }
 
     @OnClick(R.id.fab)
