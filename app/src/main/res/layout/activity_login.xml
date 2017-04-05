@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
 
     android:layout_gravity="center_vertical|center_horizontal|center"
+    android:background="#FFFFFF"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
     android:focusableInTouchMode="true">
@@ -39,9 +40,9 @@
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:hint="Username"
                 android:inputType="textEmailAddress"/>
         </android.support.design.widget.TextInputLayout>
 

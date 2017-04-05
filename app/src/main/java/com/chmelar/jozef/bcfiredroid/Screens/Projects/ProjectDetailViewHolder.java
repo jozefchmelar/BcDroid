@@ -4,7 +4,6 @@ package com.chmelar.jozef.bcfiredroid.Screens.Projects;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -24,22 +23,37 @@ public class ProjectDetailViewHolder extends SettableViewHolder<Project> {
     TextView projectNumber;
     @BindView(R.id.tvCostumer)
     TextView costumer;
-    @BindView(R.id.tvNumberOfMessages)
-    TextView numberOfMessages;
     @BindView(R.id.llMessages)
     LinearLayout messagesLayout;
+    @BindView(R.id.llPeople)
+    LinearLayout pplLayout;
+    private IProjectDetail clicks;
 
-    public ProjectDetailViewHolder(@NonNull Context context, @LayoutRes int layoutRes, @NonNull ViewGroup parent) {
+    public ProjectDetailViewHolder(@NonNull Context context, @LayoutRes int layoutRes, @NonNull ViewGroup parent,final IProjectDetail clicks) {
+
         super(context, layoutRes, parent);
         ButterKnife.bind(this, itemView);
+       this.clicks=clicks;
     }
 
     @Override
     public void setData(@NonNull Project data) {
+        final Project p = data;
         projectName.setText(data.getName());
-        projectNumber.setText(data.getNumber());
+        projectNumber.setText(data.get_id()+"");
         costumer.setText(data.getCostumer());
-        numberOfMessages.setText(data.getNumber());
+        pplLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clicks.onPeopleClick(p);
+            }
+        });
+        messagesLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clicks.onMessageClick(p);
+            }
+        });
 
     }
 

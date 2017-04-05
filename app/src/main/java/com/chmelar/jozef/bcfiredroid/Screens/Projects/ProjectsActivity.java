@@ -30,7 +30,7 @@ import eu.inloop.simplerecycleradapter.SimpleRecyclerAdapter;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 import lombok.val;
 
-public class ProjectsActivity extends AppCompatActivity implements IProjectsView, ItemClickListener<Project> {
+public class ProjectsActivity extends AppCompatActivity implements IProjectsView, ItemClickListener<Project>,IProjectDetail {
 
     private static final String TAG = "ProjectActivity";
     @BindView(R.id.projectsListView)
@@ -65,16 +65,18 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
                 presenter.getProjectData(loginResponse);
             }
         });
+
     }
 
 
     private void initAdapter() {
         final Activity activity = this;
+        final IProjectDetail projectDetail=this;
         projectAdapter = new SimpleRecyclerAdapter<>(this, new SimpleRecyclerAdapter.CreateViewHolder<Project>() {
             @NonNull
             @Override
             protected SettableViewHolder<Project> onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new ProjectDetailViewHolder(activity, R.layout.project_card, parent);
+                return new ProjectDetailViewHolder(activity, R.layout.project_card, parent,projectDetail);
             }
         });
         projectsListView.setItemAnimator(new FadeInAnimator(new OvershootInterpolator(1f)));
@@ -83,6 +85,23 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
         projectsListView.getLayoutManager().setAutoMeasureEnabled(true);
         projectsListView.setNestedScrollingEnabled(false);
         projectsListView.setHasFixedSize(false);
+        projectsListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0 && fab.isShown()) {
+                    fab.hide();
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    fab.show();
+                }
+
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
     }
 
 
@@ -119,12 +138,32 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
 
     @Override
     public void onItemClick(@NonNull Project item, @NonNull SettableViewHolder<Project> viewHolder, @NonNull View view) {
-        val intent = new Intent(this, ProjectActivity.class);
-        startActivity(intent.putExtra("project", item));
+
     }
 
     @OnClick(R.id.fab)
     public void onClick() {
         toast("fab");
+    }
+
+    @Override
+    public void onPeopleClick(Project p) {
+        val intent = new Intent(getApplicationContext(), ProjectActivity.class);
+        intent.putExtra("screen",1);
+        intent.putExtra("project",p);
+        val user =  (LoginResponse) getIntent().getSerializableExtra("LoginResponse");
+        intent.putExtra("user",user.getUser());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onMessageClick(Project p) {
+        val intent = new Intent(getApplicationContext(), ProjectActivity.class);
+        intent.putExtra("project",p);
+        intent.putExtra("screen",0);
+        val user =  (LoginResponse)getIntent().getSerializableExtra("LoginResponse");
+        intent.putExtra("user",user.getUser());
+        startActivity(intent);
+
     }
 }

@@ -10,10 +10,12 @@ import lombok.Data;
 
 @Data
 public class User implements Serializable {
-    private int _id;
+    public int _id;
     public String email;
     public String lastName;
     public String firstName;
+    public String position;
+    public String phone;
     //LinkedList cause List is not implementing Serializable
     public LinkedList<Integer> projects;
 

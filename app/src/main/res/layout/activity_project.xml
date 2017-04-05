@@ -4,7 +4,10 @@
               android:id="@+id/projectRoot"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="#FFFFFF"
               android:orientation="vertical">
+
+    <include layout="@layout/layout"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/home_tabs"

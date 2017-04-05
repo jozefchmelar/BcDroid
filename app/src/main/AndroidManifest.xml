@@ -3,6 +3,7 @@
           package="com.chmelar.jozef.bcfiredroid">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".App"
@@ -53,6 +54,7 @@
         </activity>
         <activity
             android:name=".Screens.Project.ProjectActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"
 
             >

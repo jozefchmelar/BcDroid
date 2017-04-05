@@ -31,7 +31,6 @@ public class ProjectsPresenter {
                     @Override
                     public void onSubscribe(Disposable d) {
                         view.loadAnimationOn();
-
                     }
 
                     @Override

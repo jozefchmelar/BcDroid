@@ -22,7 +22,8 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/projectsListView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="#FFFFFF">
 
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
@@ -36,6 +37,7 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:src="@mipmap/ic_add"
             android:visibility="visible"
+            app:backgroundTint="@color/primary"
             app:elevation="4dp"
             app:fabSize="normal"
             app:srcCompat="@mipmap/ic_add"/>
