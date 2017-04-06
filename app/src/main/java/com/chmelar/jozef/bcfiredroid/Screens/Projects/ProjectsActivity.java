@@ -52,7 +52,8 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
         ButterKnife.bind(this);
         presenter = new ProjectsPresenter(this, ((App) getApplicationContext()).getApi());
         final LoginResponse loginResponse = (LoginResponse) getIntent().getSerializableExtra("LoginResponse");
-//        getSupportActionBar().setTitle(loginResponse.getFullName());
+
+        getSupportActionBar().setTitle(loginResponse.getFullName());
 
         initAdapter();
         projectsListView.setAdapter(projectAdapter);

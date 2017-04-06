@@ -39,6 +39,13 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    //   compile 'com.android.support.constraint:constraint-toolbar:1.0.2'
+    // sdk19, sdk21, sdk23 are also available
+    // In case you need support-v4 bindings
+    // For appcompat-v7 bindings
+
+    compile group: 'joda-time', name: 'joda-time', version: '2.3'
+
     compile 'com.google.firebase:firebase-messaging:10.2.0'
     compile 'org.projectlombok:lombok:1.16.14'
     compile 'org.glassfish:javax.annotation:10.0-b28'
@@ -56,15 +63,12 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.0'
     compile 'eu.inloop:simplerecycleradapter:0.3.2'
     compile 'jp.wasabeef:recyclerview-animators:2.2.5'
+    compile 'org.jetbrains.anko:anko-sdk23:0.9.1'
+    compile 'org.jetbrains.anko:anko-support-v4:0.9.1'
+    compile 'org.jetbrains.anko:anko-appcompat-v7:0.9.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-
-    compile 'org.jetbrains.anko:anko-sdk23:0.9.1' // sdk19, sdk21, sdk23 are also available
-    compile 'org.jetbrains.anko:anko-support-v4:0.9.1' // In case you need support-v4 bindings
-    compile 'org.jetbrains.anko:anko-appcompat-v7:0.9.1' // For appcompat-v7 bindings
-
-    compile group: 'joda-time', name: 'joda-time', version: '2.3'
 
 }
 

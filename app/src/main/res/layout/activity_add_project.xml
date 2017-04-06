@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/addTripRoot"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#FFFFFF"
+    >
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabTripDone"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_check_black_24dp"
+        app:backgroundTint="@color/accent"
+        app:elevation="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/toolbar"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etReason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/reason"
+                android:inputType="textPersonName"
+                />
+
+            <EditText
+                android:id="@+id/etUsedCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Mercedes Benz"
+                android:inputType="textPersonName"/>
+
+            <EditText
+                android:id="@+id/etDateTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="date"
+                android:inputType="time"/>
+
+            <AutoCompleteTextView
+                android:id="@+id/actvName"
+                android:hint="meno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <recycler.RecyclerListView
+                android:id="@+id/rvUsersToAdd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

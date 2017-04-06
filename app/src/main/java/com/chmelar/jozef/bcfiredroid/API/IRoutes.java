@@ -7,6 +7,7 @@ import com.chmelar.jozef.bcfiredroid.API.Model.User;
 import com.chmelar.jozef.bcfiredroid.Screens.Project.Comment;
 import com.chmelar.jozef.bcfiredroid.Screens.Project.SubmitComment;
 import com.chmelar.jozef.bcfiredroid.Screens.Project.SubmitCommentResponse;
+import com.chmelar.jozef.bcfiredroid.Screens.Project.Trip;
 
 import java.util.List;
 
@@ -35,5 +36,7 @@ public interface IRoutes {
     @POST("project/{id}/comment")
     Observable<SubmitCommentResponse> submitComment(@Body SubmitComment comment, @Path("id")String id);
 
+    @GET("project/{id}/trip")
+    Observable<List<Trip>> getTrips (@Path("id") String projectId);
 
 }

@@ -14,18 +14,12 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-        <ScrollView
+        <recycler.RecyclerListView
+            android:id="@+id/recyclerComments"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.90">
-
-            <recycler.RecyclerListView
-                android:id="@+id/recyclerComments"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </recycler.RecyclerListView>
-
-        </ScrollView>
+            android:layout_weight="0.9">
+        </recycler.RecyclerListView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,5 +54,6 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
 </LinearLayout>

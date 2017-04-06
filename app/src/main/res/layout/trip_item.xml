@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="72dp"
+              android:layout_marginTop="8dp"
+              android:background="?attr/selectableItemBackground"
+              android:baselineAligned="true"
+              android:clickable="true"
+              android:gravity="center"
+              android:orientation="horizontal"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:weightSum="1">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvReason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="fixing stuff"
+            android:textAppearance="@android:style/TextAppearance.Material.Menu"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:text="VW Caddy"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"/>
+
+            <TextView
+                android:id="@+id/tvTripDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:text="13.3.2017"
+                android:textAlignment="viewEnd"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/arrowFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.75"
+
+        >
+
+        <ImageView
+            android:id="@+id/ivArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+
+            android:layout_gravity="center|end"
+            android:layout_weight="0.25"
+            android:visibility="visible"
+            app:srcCompat="@mipmap/arrow_right"/>
+    </FrameLayout>
+
+</LinearLayout>

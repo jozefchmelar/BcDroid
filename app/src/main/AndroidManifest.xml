@@ -3,7 +3,7 @@
           package="com.chmelar.jozef.bcfiredroid">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:name=".App"
@@ -16,8 +16,7 @@
 
         <activity
             android:name=".Screens.Login.LoginActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            >
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -55,8 +54,11 @@
         <activity
             android:name=".Screens.Project.ProjectActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize"
-
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity android:name=".Screens.Project.TripsActivity"/>
+        <activity android:name=".Screens.Project.AddProjectActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
             >
         </activity>
     </application>

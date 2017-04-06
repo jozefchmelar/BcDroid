@@ -37,8 +37,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="8dp"
                 android:text="13.3.2017"
+                android:textAlignment="viewEnd"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"/>
         </LinearLayout>
 

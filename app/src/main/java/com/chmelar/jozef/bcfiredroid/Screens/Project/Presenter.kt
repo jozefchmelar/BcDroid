@@ -25,4 +25,11 @@ data class SubmitCommentResponse(
     val success:Boolean
 )
 
+data class Trip(
+    val _id:String,
+    val car:String,
+    val reason:String,
+    val employees:ArrayList<User>
+
+)
 data class SubmitComment(val text:String, val author:Int)
