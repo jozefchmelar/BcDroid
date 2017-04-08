@@ -1,8 +1,13 @@
 package com.chmelar.jozef.bcfiredroid.Screens.Project
 
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.support.design.widget.FloatingActionButton
+import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import com.chmelar.jozef.bcfiredroid.API.Model.Project
 import com.chmelar.jozef.bcfiredroid.API.Model.User
 import com.chmelar.jozef.bcfiredroid.App
 import com.chmelar.jozef.bcfiredroid.R
@@ -10,13 +15,13 @@ import extensions.android.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_project.view.*
-import kotlinx.android.synthetic.main.project_comments.view.*
-import kotlinx.android.synthetic.main.trip_item.view.*
 import navigation.Navigation
 import navigation.ToolbarActivity
 import org.jetbrains.anko.onItemClick
-import org.jetbrains.anko.onItemSelectedListener
+import recycler.RecyclerListView
+import recycler.hideFabOnScroll
 import rx.whenAttached
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,14 +31,17 @@ class AddProjectActivity : ToolbarActivity({
 }, Navigation.up)
 
 fun View.addProject() = addTripRoot.whenAttached {
+    @Suppress("UNCHECKED_CAST")
     val users = activity.intent.getSerializableExtra("USERS_TRIP") as ArrayList<User>
+    val project = activity.intent.getSerializableExtra("PROJECT_TRIP") as Project
 
-    val adapter  =  ArrayAdapter<User>(context, android.R.layout.simple_list_item_1, users.toTypedArray())
-    var usersToAdd = ArrayList<User>()
+    rvUsersToAdd.hideFabOnScroll(fabTripDone)
+    val adapter = ArrayAdapter<User>(context, android.R.layout.simple_list_item_1, users.toTypedArray())
+    val usersToAdd = ArrayList<User>()
     actvName.setAdapter(adapter)
     actvName.onItemClick { adapterView, view, i, l ->
-        val item = adapter.getItem(i) as User
-        if(!usersToAdd.contains(item)) usersToAdd.add(item)
+        val item = adapter.getItem(i)
+        if (!usersToAdd.contains(item)) usersToAdd.add(item)
         rvUsersToAdd.show(usersToAdd.map(::employeeRow))
         actvName.setText("")
     }
@@ -55,22 +63,28 @@ fun View.addProject() = addTripRoot.whenAttached {
             myCalendar.get(Calendar.DAY_OF_MONTH)).show()
     }
 
-    fabTripDone.onClick{
-        if(tvReason.text.isEmpty()||
-            tvCar.text.isEmpty()||
-            tvTripDate.text.isEmpty()||
-            usersToAdd.isEmpty()){
+    fabTripDone.onClick {
+        if (etReason.text.isEmpty() ||
+            etUsedCar.text.isEmpty() ||
+            etDateTime.text.isEmpty() ||
+            usersToAdd.isEmpty()) {
             message("All fields must be filled")
-        }else{
+        } else {
             (activity.application as App).api
-                .submitComment(SubmitComment(etCommentText.text.toString(), user._id), project._id)
+                .postTrip(TripRequest(
+                    car = etUsedCar.text.toString(),
+                    reason = etReason.text.toString(),
+                    date = etDateTime.text.toString(),
+                    employees = usersToAdd.map(User::_id)),project._id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .take(1)
                 .subscribe(
                     {
-                        getComments((activity.application as App), project, recyclerComments)
-                        etCommentText.setText("")
+                       Log.d("BAGA",it.toString())
+                        val i = Intent(context,ProjectActivity::class.java)
+                        toast("ok")
+                        activity.finish()
                     },
                     {
                         toast("err posting comment")
@@ -81,3 +95,16 @@ fun View.addProject() = addTripRoot.whenAttached {
 
 }
 
+
+
+
+data class TripRequest(
+    val car: String,
+    val reason: String,
+    val date: String,
+    val employees:List<Int>
+)
+data class TripResponse (
+    val trip: TripRequest,
+    val success:Boolean
+)

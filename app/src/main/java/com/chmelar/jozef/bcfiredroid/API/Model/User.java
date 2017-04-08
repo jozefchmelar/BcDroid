@@ -26,6 +26,13 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return lastName + " " + firstName;
+        return getFirstName() + " " + getLastName();
+    }
+
+    public String getFirstName(){
+        return Character.toUpperCase(firstName.charAt(0)) + firstName.substring(1);
+    }
+    public String getLastName(){
+        return Character.toUpperCase(lastName.charAt(0)) + lastName.substring(1);
     }
 }

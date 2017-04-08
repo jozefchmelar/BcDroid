@@ -1,12 +1,11 @@
-package com.chmelar.jozef.bcfiredroid.Screens.Projects;
+package com.chmelar.jozef.bcfiredroid.Screens.Projects.CreateProject;
 
 
 import com.chmelar.jozef.bcfiredroid.API.IRoutes;
-import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
 import com.chmelar.jozef.bcfiredroid.API.Model.Project;
 import com.chmelar.jozef.bcfiredroid.API.Model.User;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -14,33 +13,61 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ProjectsPresenter {
+public class CreateProjectPresenter {
 
-    private IProjectsView view;
+    private ICreateProjectView view;
+
     private IRoutes client;
 
-    public ProjectsPresenter(IProjectsView view, IRoutes api) {
+    public CreateProjectPresenter(ICreateProjectView view, IRoutes client) {
         this.view = view;
-        this.client = api;
+        this.client = client;
     }
 
-    public void getProjectData(LoginResponse LoginResponse) {
-        client
-                .getUser(LoginResponse.getUser().get_id())
+    public void getUsers() {
+        client.getUsers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .take(1)
-                .subscribe(new Observer<User>() {
+                .subscribe(new Observer<List<User>>() {
+
                     @Override
                     public void onSubscribe(Disposable d) {
-                        view.loadAnimationOn();
+
                     }
 
                     @Override
-                    public void onNext(User value) {
-                        for (Integer projectNumber : value.getProjects()) {
-                            getUserProject(projectNumber);
-                        }
+                    public void onNext(List<User> value) {
+                        view.displayUsers(value);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    public void postProject(ProjectRequest project) {
+        client.postProject(project)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .take(1)
+                .subscribe(new Observer<Project>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Project value) {
+                        view.done(null);
                     }
 
                     @Override
@@ -50,38 +77,10 @@ public class ProjectsPresenter {
 
                     @Override
                     public void onComplete() {
-                        view.loadAnimationOff();
-                        view.sortListView();
+
                     }
                 });
-    }
 
-    private void getUserProject(int id) {
-        client
-                .getProject(id)
-                .take(1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Project>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(Project value) {
-                        view.addProject(value);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                        view.toast("Error gettin projects");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
     }
 
 }

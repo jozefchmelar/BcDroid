@@ -9,4 +9,6 @@ public interface IProjectDetail {
     void onPeopleClick(Project p);
 
     void onMessageClick(Project p);
+
+    void onTripsClick(Project p);
 }

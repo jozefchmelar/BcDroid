@@ -67,9 +67,9 @@ dependencies {
     compile 'org.jetbrains.anko:anko-support-v4:0.9.1'
     compile 'org.jetbrains.anko:anko-appcompat-v7:0.9.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.florent37:singledateandtimepicker:1.1.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-
 }
 
 

@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
@@ -35,6 +38,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     CardView btnLogin;
     @BindView(R.id.llLoginButtons)
     LinearLayout llLoginButtons;
+
+    @BindView(R.id.tvRegister)
+    TextView tvRegister;
+    @BindView(R.id.login_root)
+    FrameLayout loginRoot;
 
     private LoginPresenter loginPresenter;
 
@@ -74,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         ((App) getApplicationContext()).addToken(loginResponse.getToken());
         Intent intent = new Intent(this, ProjectsActivity.class);
         intent.putExtra("LoginResponse", loginResponse);
-        Log.d(TAG, "goToProjects: "+loginResponse.toString());
+        Log.d(TAG, "goToProjects: " + loginResponse.toString());
         startActivity(intent);
         finish();
     }

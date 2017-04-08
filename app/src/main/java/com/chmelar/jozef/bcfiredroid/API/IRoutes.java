@@ -1,5 +1,6 @@
 package com.chmelar.jozef.bcfiredroid.API;
 
+import com.chmelar.jozef.bcfiredroid.API.Model.AddPeopleToProjectRequest;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginRequest;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
 import com.chmelar.jozef.bcfiredroid.API.Model.Project;
@@ -8,7 +9,11 @@ import com.chmelar.jozef.bcfiredroid.Screens.Project.Comment;
 import com.chmelar.jozef.bcfiredroid.Screens.Project.SubmitComment;
 import com.chmelar.jozef.bcfiredroid.Screens.Project.SubmitCommentResponse;
 import com.chmelar.jozef.bcfiredroid.Screens.Project.Trip;
+import com.chmelar.jozef.bcfiredroid.Screens.Project.TripRequest;
+import com.chmelar.jozef.bcfiredroid.Screens.Project.TripResponse;
+import com.chmelar.jozef.bcfiredroid.Screens.Projects.CreateProject.ProjectRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -26,6 +31,9 @@ public interface IRoutes {
     @GET("employee/{id}")
     Observable<User> getUser(@Path("id") int id);
 
+    @GET("employee/")
+    Observable<List<User>> getUsers();
+
     @GET("project/{id}")
     Observable<Project> getProject(@Path("id")int id);
 
@@ -39,4 +47,12 @@ public interface IRoutes {
     @GET("project/{id}/trip")
     Observable<List<Trip>> getTrips (@Path("id") String projectId);
 
+    @POST("project/{id}/trip")
+    Observable<TripResponse> postTrip (@Body TripRequest tripRequest, @Path("id") String projectId);
+
+    @POST("project/")
+    Observable<Project> postProject (@Body ProjectRequest project);
+
+    @POST("project/{id}/add")
+    Observable<Boolean> addPeopleToProject (@Body AddPeopleToProjectRequest ppl, @Path("id") String projectId);
 }

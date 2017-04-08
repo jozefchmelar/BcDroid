@@ -57,6 +57,13 @@ public class App extends Application {
 
         createApiService(client);
     }
+    public void clearCache(){
+        try {
+            client.cache().delete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public IRoutes getApi() {
         return bcDroidService;

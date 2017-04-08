@@ -9,3 +9,11 @@ fun setTabsLayout(pager: ViewPager, tabs: TabLayout, @LayoutRes layout: Int) =
         tab!!.setCustomView(layout)
         tab.text = pager.adapter.getPageTitle(i)
     }
+
+
+fun ViewPager.onPageChangeListener(action: (Int, Float) -> Unit) =
+    addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        override fun onPageScrollStateChanged(state: Int) { }
+        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) { action(position, positionOffset) }
+        override fun onPageSelected(position: Int) { }
+    })

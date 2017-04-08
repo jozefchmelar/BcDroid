@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -20,6 +19,7 @@ import com.chmelar.jozef.bcfiredroid.API.Model.Project;
 import com.chmelar.jozef.bcfiredroid.App;
 import com.chmelar.jozef.bcfiredroid.R;
 import com.chmelar.jozef.bcfiredroid.Screens.Project.ProjectActivity;
+import com.chmelar.jozef.bcfiredroid.Screens.Projects.CreateProject.CreateProject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,11 +50,12 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_projects);
         ButterKnife.bind(this);
-        presenter = new ProjectsPresenter(this, ((App) getApplicationContext()).getApi());
+
         final LoginResponse loginResponse = (LoginResponse) getIntent().getSerializableExtra("LoginResponse");
-
+        if(loginResponse!=null)
+            ((App) getApplicationContext()).addToken(loginResponse.getToken());
+        presenter = new ProjectsPresenter(this, ((App) getApplicationContext()).getApi());
         getSupportActionBar().setTitle(loginResponse.getFullName());
-
         initAdapter();
         projectsListView.setAdapter(projectAdapter);
         presenter.getProjectData(loginResponse);
@@ -144,27 +145,35 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
 
     @OnClick(R.id.fab)
     public void onClick() {
-        toast("fab");
-    }
-
-    @Override
-    public void onPeopleClick(Project p) {
-        val intent = new Intent(getApplicationContext(), ProjectActivity.class);
-        intent.putExtra("screen",1);
-        intent.putExtra("project",p);
+        val intent = new Intent(getApplicationContext(), CreateProject.class);
         val user =  (LoginResponse) getIntent().getSerializableExtra("LoginResponse");
         intent.putExtra("user",user.getUser());
         startActivity(intent);
     }
 
     @Override
+    public void onPeopleClick(Project p) {
+        goToProject(ScreenType.PEOPLE,p);
+    }
+
+    @Override
     public void onMessageClick(Project p) {
+        goToProject(ScreenType.COMMENTS,p);
+    }
+
+    @Override
+    public void onTripsClick(Project p) {
+        goToProject(ScreenType.TRIPS,p);
+    }
+
+    private void goToProject(ScreenType type,Project p){
         val intent = new Intent(getApplicationContext(), ProjectActivity.class);
         intent.putExtra("project",p);
-        intent.putExtra("screen",0);
+        intent.putExtra("screen",type.getId());
         val user =  (LoginResponse)getIntent().getSerializableExtra("LoginResponse");
         intent.putExtra("user",user.getUser());
         startActivity(intent);
-
     }
 }
+
+

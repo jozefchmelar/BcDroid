@@ -4,6 +4,7 @@ package com.chmelar.jozef.bcfiredroid.Screens.Projects;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -27,6 +28,12 @@ public class ProjectDetailViewHolder extends SettableViewHolder<Project> {
     LinearLayout messagesLayout;
     @BindView(R.id.llPeople)
     LinearLayout pplLayout;
+
+    @BindView(R.id.llTrips)
+    LinearLayout tripsLayout;
+    @BindView(R.id.projectCard)
+    CardView projectCard;
+
     private IProjectDetail clicks;
 
     public ProjectDetailViewHolder(@NonNull Context context, @LayoutRes int layoutRes, @NonNull ViewGroup parent,final IProjectDetail clicks) {
@@ -49,6 +56,18 @@ public class ProjectDetailViewHolder extends SettableViewHolder<Project> {
             }
         });
         messagesLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clicks.onMessageClick(p);
+            }
+        });
+        tripsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clicks.onTripsClick(p);
+            }
+        });
+        projectCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clicks.onMessageClick(p);

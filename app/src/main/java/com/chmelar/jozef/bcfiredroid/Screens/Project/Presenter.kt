@@ -29,7 +29,8 @@ data class Trip(
     val _id:String,
     val car:String,
     val reason:String,
-    val employees:ArrayList<User>
+    val employees:ArrayList<User>,
+    val date:String
 
 )
 data class SubmitComment(val text:String, val author:Int)
