@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">bice</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
-    <string name="costumer_name">costumer name</string>
-    <string name="project_number">project number</string>
-    <string name="name_of_project">Name of project</string>
-    <string name="comments">Comments</string>
-    <string name="people">People</string>
-    <string name="reason">reason</string>
+    <string name="costumer_name">Zákazník</string>
+    <string name="project_number">číslo zákazky</string>
+    <string name="name_of_project">projek</string>
+    <string name="comments">status</string>
+    <string name="people">ľudia</string>
+    <string name="reason">dôvod</string>
     <string name="newproject">Nový projekt</string>
-    <string name="addpoeple">Pridat ludi</string>
+    <string name="addpoeple">Pridať ludí</string>
     <string name="attendet">Zúčastnení</string>
 </resources>

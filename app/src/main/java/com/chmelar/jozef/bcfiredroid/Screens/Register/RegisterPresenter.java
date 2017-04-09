@@ -2,7 +2,7 @@ package com.chmelar.jozef.bcfiredroid.Screens.Register;
 
 import android.util.Log;
 
-import com.chmelar.jozef.bcfiredroid.API.IRoutes;
+import com.chmelar.jozef.bcfiredroid.API.IApiRoutes;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
 import com.chmelar.jozef.bcfiredroid.API.Model.RegisterRequest;
 import com.chmelar.jozef.bcfiredroid.Util.Util;
@@ -16,9 +16,9 @@ public class RegisterPresenter {
 
     private static final String TAG = "RegisterPresenter";
     private IRegisterView view;
-    private IRoutes client;
+    private IApiRoutes client;
 
-    public RegisterPresenter(IRegisterView view, IRoutes client) {
+    public RegisterPresenter(IRegisterView view, IApiRoutes client) {
         this.view = view;
         this.client = client;
     }

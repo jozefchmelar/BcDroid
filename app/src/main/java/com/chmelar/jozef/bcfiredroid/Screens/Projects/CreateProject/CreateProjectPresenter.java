@@ -1,13 +1,10 @@
 package com.chmelar.jozef.bcfiredroid.Screens.Projects.CreateProject;
 
-
-import com.chmelar.jozef.bcfiredroid.API.IRoutes;
+import com.chmelar.jozef.bcfiredroid.API.IApiRoutes;
 import com.chmelar.jozef.bcfiredroid.API.Model.Project;
+import com.chmelar.jozef.bcfiredroid.API.Model.ProjectRequest;
 import com.chmelar.jozef.bcfiredroid.API.Model.User;
-
-import java.util.LinkedList;
 import java.util.List;
-
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -17,9 +14,9 @@ public class CreateProjectPresenter {
 
     private ICreateProjectView view;
 
-    private IRoutes client;
+    private IApiRoutes client;
 
-    public CreateProjectPresenter(ICreateProjectView view, IRoutes client) {
+    public CreateProjectPresenter(ICreateProjectView view, IApiRoutes client) {
         this.view = view;
         this.client = client;
     }
@@ -80,7 +77,6 @@ public class CreateProjectPresenter {
 
                     }
                 });
-
     }
 
 }

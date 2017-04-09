@@ -1,14 +1,9 @@
 package com.chmelar.jozef.bcfiredroid.Screens.Projects;
 
-
-import com.chmelar.jozef.bcfiredroid.API.IRoutes;
+import com.chmelar.jozef.bcfiredroid.API.IApiRoutes;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
 import com.chmelar.jozef.bcfiredroid.API.Model.Project;
 import com.chmelar.jozef.bcfiredroid.API.Model.User;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -17,15 +12,15 @@ import io.reactivex.schedulers.Schedulers;
 public class ProjectsPresenter {
 
     private IProjectsView view;
-    private IRoutes client;
+    private IApiRoutes apiRoutes;
 
-    public ProjectsPresenter(IProjectsView view, IRoutes api) {
+    public ProjectsPresenter(IProjectsView view, IApiRoutes api) {
         this.view = view;
-        this.client = api;
+        this.apiRoutes = api;
     }
 
     public void getProjectData(LoginResponse LoginResponse) {
-        client
+        apiRoutes
                 .getUser(LoginResponse.getUser().get_id())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -57,7 +52,7 @@ public class ProjectsPresenter {
     }
 
     private void getUserProject(int id) {
-        client
+        apiRoutes
                 .getProject(id)
                 .take(1)
                 .subscribeOn(Schedulers.io())
@@ -74,8 +69,7 @@ public class ProjectsPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-
-                        view.toast("Error gettin projects");
+                        view.toast("Error getting projects");
                     }
 
                     @Override

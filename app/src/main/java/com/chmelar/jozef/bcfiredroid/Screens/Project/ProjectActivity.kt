@@ -11,8 +11,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
-import com.chmelar.jozef.bcfiredroid.API.Model.Project
-import com.chmelar.jozef.bcfiredroid.API.Model.User
+import com.chmelar.jozef.bcfiredroid.API.Model.*
 import com.chmelar.jozef.bcfiredroid.App
 import com.chmelar.jozef.bcfiredroid.R
 import com.chmelar.jozef.bcfiredroid.Screens.Project.AddPeople.AddToProjectPeopleActivity
@@ -108,7 +107,6 @@ private fun View.trips() = tripsRoot.whenAttached {
         }
     }
     val project = activity.intent.getSerializableExtra("project") as Project
-    val user = activity.intent.getSerializableExtra("user") as User
     (activity.application as App).api
         .getTrips(project._id)
         .subscribeOn(Schedulers.io())
@@ -228,7 +226,7 @@ fun commentRow(index: Int, comment: Comment) = R.layout.comment.showAs {
     val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(comment.createdAt)
     val formattedDate = SimpleDateFormat("HH:mm dd.MMM").format(date).toString()
     tvCommentText.text = comment.text
-    tvAuthor.text = comment.author.firstName + " " + comment.author.lastName
+    tvAuthor.text = comment.author.toString()
     tvDate.text = formattedDate
 }
 

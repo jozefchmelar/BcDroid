@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import eu.inloop.simplerecycleradapter.SettableViewHolder;
 
 public class ProjectDetailViewHolder extends SettableViewHolder<Project> {
+
     @BindView(R.id.tvNameOfProject)
     TextView projectName;
     @BindView(R.id.tvProjectNumber)
@@ -28,7 +29,6 @@ public class ProjectDetailViewHolder extends SettableViewHolder<Project> {
     LinearLayout messagesLayout;
     @BindView(R.id.llPeople)
     LinearLayout pplLayout;
-
     @BindView(R.id.llTrips)
     LinearLayout tripsLayout;
     @BindView(R.id.projectCard)
@@ -36,44 +36,41 @@ public class ProjectDetailViewHolder extends SettableViewHolder<Project> {
 
     private IProjectDetail clicks;
 
-    public ProjectDetailViewHolder(@NonNull Context context, @LayoutRes int layoutRes, @NonNull ViewGroup parent,final IProjectDetail clicks) {
-
+    public ProjectDetailViewHolder(@NonNull Context context, @LayoutRes int layoutRes, @NonNull ViewGroup parent, final IProjectDetail clicks) {
         super(context, layoutRes, parent);
         ButterKnife.bind(this, itemView);
-       this.clicks=clicks;
+        this.clicks = clicks;
     }
 
     @Override
-    public void setData(@NonNull Project data) {
-        final Project p = data;
-        projectName.setText(data.getName());
-        projectNumber.setText(data.get_id()+"");
-        costumer.setText(data.getCostumer());
-        pplLayout.setOnClickListener(new View.OnClickListener() {
+    public void setData(@NonNull final Project p) {
+        projectName     .setText(p.getName());
+        projectNumber   .setText(p.get_id());
+        costumer        .setText(p.getCostumer());
+        pplLayout       .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clicks.onPeopleClick(p);
             }
         });
-        messagesLayout.setOnClickListener(new View.OnClickListener() {
+        messagesLayout  .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clicks.onMessageClick(p);
             }
         });
-        tripsLayout.setOnClickListener(new View.OnClickListener() {
+        tripsLayout     .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clicks.onTripsClick(p);
             }
         });
-        projectCard.setOnClickListener(new View.OnClickListener() {
+        projectCard     .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clicks.onMessageClick(p);
             }
         });
-
     }
 
 }

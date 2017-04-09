@@ -1,14 +1,9 @@
 package com.chmelar.jozef.bcfiredroid;
 
-
 import android.app.Application;
-import android.util.Log;
-
-import com.chmelar.jozef.bcfiredroid.API.IRoutes;
+import com.chmelar.jozef.bcfiredroid.API.IApiRoutes;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
 import java.io.IOException;
-
 import lombok.val;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -25,20 +20,19 @@ public class App extends Application {
 
     private HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     private OkHttpClient client;
-    private IRoutes bcDroidService;
+    private IApiRoutes bcDroidService;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-        val cache = new Cache(getCacheDir(), 2048);
-        //region client and retrofit crea
+        val cache = new Cache(getCacheDir(), 2048 /*bytes*/);
+        //region client and retrofit
         client = new OkHttpClient()
                 .newBuilder()
                 .addInterceptor(interceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
                 .cache(cache)
                 .build();
-
         createApiService(client);
     }
 
@@ -65,7 +59,7 @@ public class App extends Application {
         }
     }
 
-    public IRoutes getApi() {
+    public IApiRoutes getApi() {
         return bcDroidService;
     }
 
@@ -75,6 +69,6 @@ public class App extends Application {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
-                .create(IRoutes.class);
+                .create(IApiRoutes.class);
     }
 }

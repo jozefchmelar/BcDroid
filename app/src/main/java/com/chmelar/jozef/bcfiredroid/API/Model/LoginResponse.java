@@ -10,10 +10,7 @@ public class LoginResponse implements Serializable {
     private User user;
     private String token;
 
-    public LoginResponse() {
-    }
-
     public String getFullName(){
-        return this.user.getFirstName() + " " + this.user.getLastName();
+        return this.user.toString();
     }
 }

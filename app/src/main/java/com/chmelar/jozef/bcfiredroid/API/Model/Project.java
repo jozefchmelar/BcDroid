@@ -13,6 +13,4 @@ public class Project implements Serializable {
     public String costumer;
     public LinkedList<String> comments;
     public LinkedList<User> employees;
-
-
 }

@@ -32,11 +32,10 @@ import lombok.val;
 
 public class ProjectsActivity extends AppCompatActivity implements IProjectsView, ItemClickListener<Project>,IProjectDetail {
 
-    private static final String TAG = "ProjectActivity";
     @BindView(R.id.projectsListView)
     RecyclerView projectsListView;
     @BindView(R.id.projectsRefresh)
-    SwipeRefreshLayout projectsRefresh;
+    SwipeRefreshLayout swipeToRefresh;
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
@@ -45,6 +44,11 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
     private SimpleRecyclerAdapter<Project> projectAdapter;
     private ProjectComparator projectComparator = new ProjectComparator();
 
+    /**
+     * set layout for screen, initialize presenter, get login response from previous screen
+     * logic for swipe to refresh
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +63,7 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
         initAdapter();
         projectsListView.setAdapter(projectAdapter);
         presenter.getProjectData(loginResponse);
-        projectsRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 projectAdapter.clear(true);
@@ -70,7 +74,10 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
 
     }
 
-
+    /**
+     * initialize adapter
+     * set up animations, hide fab button on listview scroll
+     */
     private void initAdapter() {
         final Activity activity = this;
         final IProjectDetail projectDetail=this;
@@ -100,22 +107,19 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     fab.show();
                 }
-
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
     }
 
-
     @Override
     public void loadAnimationOn() {
-        projectsRefresh.setRefreshing(true);
+        swipeToRefresh.setRefreshing(true);
     }
 
     @Override
     public void loadAnimationOff() {
-        projectsRefresh.setRefreshing(false);
-
+        swipeToRefresh.setRefreshing(false);
     }
 
     @Override
@@ -153,27 +157,26 @@ public class ProjectsActivity extends AppCompatActivity implements IProjectsView
 
     @Override
     public void onPeopleClick(Project p) {
-        goToProject(ScreenType.PEOPLE,p);
+        goToProject(ProjectScreen.PEOPLE,p);
     }
 
     @Override
     public void onMessageClick(Project p) {
-        goToProject(ScreenType.COMMENTS,p);
+        goToProject(ProjectScreen.COMMENTS,p);
     }
 
     @Override
     public void onTripsClick(Project p) {
-        goToProject(ScreenType.TRIPS,p);
+        goToProject(ProjectScreen.TRIPS,p);
     }
 
-    private void goToProject(ScreenType type,Project p){
+    private void goToProject(ProjectScreen screen, Project p){
         val intent = new Intent(getApplicationContext(), ProjectActivity.class);
         intent.putExtra("project",p);
-        intent.putExtra("screen",type.getId());
+        intent.putExtra("screen",screen.getId());
         val user =  (LoginResponse)getIntent().getSerializableExtra("LoginResponse");
         intent.putExtra("user",user.getUser());
         startActivity(intent);
     }
+
 }
-
-

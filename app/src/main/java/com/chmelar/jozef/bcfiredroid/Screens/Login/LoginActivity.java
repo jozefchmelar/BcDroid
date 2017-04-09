@@ -104,5 +104,4 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         startActivity(new Intent(this, RegisterActivity.class));
     }
 
-
 }

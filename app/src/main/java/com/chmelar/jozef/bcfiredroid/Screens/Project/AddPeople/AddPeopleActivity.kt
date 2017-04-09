@@ -3,9 +3,8 @@ package com.chmelar.jozef.bcfiredroid.Screens.Project.AddPeople
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
-import com.chmelar.jozef.bcfiredroid.API.IRoutes
+import com.chmelar.jozef.bcfiredroid.API.IApiRoutes
 import com.chmelar.jozef.bcfiredroid.API.Model.AddPeopleToProjectRequest
-import com.chmelar.jozef.bcfiredroid.API.Model.Project
 import com.chmelar.jozef.bcfiredroid.API.Model.User
 import com.chmelar.jozef.bcfiredroid.App
 import com.chmelar.jozef.bcfiredroid.R
@@ -16,13 +15,31 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_people.*
-import kotlinx.android.synthetic.main.activity_add_project.view.*
-import kotlinx.android.synthetic.main.activity_create_project.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.onItemClick
 import java.util.*
 
 class AddToProjectPeopleActivity : AppCompatActivity(), IAddPeopleView {
+
+    private var usersToAdd: ArrayList<User> = ArrayList()
+    private lateinit var presenter: AddToProjectPeoplePresenter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_add_people)
+        presenter = AddToProjectPeoplePresenter(this, (applicationContext as App).api)
+        val currentId: String = intent.getStringExtra("currentId")
+        rv_addppl_UsersToAdd.show(usersToAdd.map(::employeeRow))
+        presenter.getUsers()
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
+        toolbar.setNavigationOnClickListener { supportFinishAfterTransition() }
+        toolbar.title = getString(R.string.addpoeple)
+        fabAddingPeopleDone.onClick {
+            presenter.addPeopleToProject(usersToAdd, currentId)
+        }
+
+    }
+
     override fun done(value: Boolean) {
         finish()
     }
@@ -37,30 +54,6 @@ class AddToProjectPeopleActivity : AppCompatActivity(), IAddPeopleView {
             rv_addppl_UsersToAdd.show(usersToAdd.map(::employeeRow))
             actvNamePpl.setText("")
         }
-
-
-    }
-
-    private var usersToAdd: ArrayList<User> =  ArrayList<User>()
-
-    private lateinit var presenter: AddToProjectPeoplePresenter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_people)
-        presenter = AddToProjectPeoplePresenter(this, (applicationContext as App).api)
-        val currentUsers: List<User> = intent.getSerializableExtra("currentUsers") as List<User>
-        val currentId: String = intent.getStringExtra("currentId")
-
-        rv_addppl_UsersToAdd.show(usersToAdd.map(::employeeRow))
-        presenter.getUsers()
-
-        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_material)
-        toolbar.setNavigationOnClickListener { supportFinishAfterTransition() }
-        toolbar.title = getString(R.string.addpoeple)
-        fabAddingPeopleDone.onClick{
-            presenter.addPeopleToProject(usersToAdd, currentId)
-        }
-
     }
 }
 
@@ -69,57 +62,23 @@ interface IAddPeopleView {
     fun done(value: Boolean)
 }
 
-class AddToProjectPeoplePresenter(private val view: IAddPeopleView, private val client: IRoutes) {
+class AddToProjectPeoplePresenter(private val view: IAddPeopleView, private val client: IApiRoutes) {
 
     fun getUsers() {
         client.users
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .take(1)
-            .subscribe(object : Observer<List<User>> {
-
-                override fun onSubscribe(d: Disposable) {
-
-                }
-
-                override fun onNext(value: List<User>) {
-                    view.displayUsers(value)
-                }
-
-                override fun onError(e: Throwable) {
-
-                }
-
-                override fun onComplete() {
-
-                }
-            })
+            .subscribe { view.displayUsers(it) }
     }
 
+    fun addPeopleToProject(users: List<User>, projectID: String) {
 
-    fun addPeopleToProject(users:List<User>,projectID:String) {
-
-        client.addPeopleToProject(AddPeopleToProjectRequest(people = users.map(User::_id)),projectID)
+        client.addPeopleToProject(AddPeopleToProjectRequest(people = users.map(User::_id)), projectID)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .take(1)
-            .subscribe(object : Observer<Boolean> {
-                override fun onSubscribe(d: Disposable) {
-
-                }
-
-                override fun onNext(value: Boolean) {
-                    view.done( value)
-                }
-
-                override fun onError(e: Throwable) {
-                }
-
-                override fun onComplete() {
-
-                }
-            })
-
+            .subscribe{view.done(it)}
     }
 
 }

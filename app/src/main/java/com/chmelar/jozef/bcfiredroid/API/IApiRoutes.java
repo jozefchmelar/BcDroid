@@ -4,16 +4,15 @@ import com.chmelar.jozef.bcfiredroid.API.Model.AddPeopleToProjectRequest;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginRequest;
 import com.chmelar.jozef.bcfiredroid.API.Model.LoginResponse;
 import com.chmelar.jozef.bcfiredroid.API.Model.Project;
+import com.chmelar.jozef.bcfiredroid.API.Model.ProjectRequest;
 import com.chmelar.jozef.bcfiredroid.API.Model.User;
-import com.chmelar.jozef.bcfiredroid.Screens.Project.Comment;
-import com.chmelar.jozef.bcfiredroid.Screens.Project.SubmitComment;
-import com.chmelar.jozef.bcfiredroid.Screens.Project.SubmitCommentResponse;
-import com.chmelar.jozef.bcfiredroid.Screens.Project.Trip;
+import com.chmelar.jozef.bcfiredroid.API.Model.Comment;
+import com.chmelar.jozef.bcfiredroid.API.Model.SubmitComment;
+import com.chmelar.jozef.bcfiredroid.API.Model.SubmitCommentResponse;
+import com.chmelar.jozef.bcfiredroid.API.Model.Trip;
 import com.chmelar.jozef.bcfiredroid.Screens.Project.TripRequest;
 import com.chmelar.jozef.bcfiredroid.Screens.Project.TripResponse;
-import com.chmelar.jozef.bcfiredroid.Screens.Projects.CreateProject.ProjectRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -22,11 +21,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public interface IRoutes {
-    @POST("login")
-    Observable<LoginResponse> login(@Body LoginRequest loginResponse);
-    @POST("register")
-    Observable<LoginResponse> register(@Body LoginRequest loginResponse);
+public interface IApiRoutes {
 
     @GET("employee/{id}")
     Observable<User> getUser(@Path("id") int id);
@@ -40,12 +35,11 @@ public interface IRoutes {
     @GET("project/{id}/comment")
     Observable<List<Comment>> getComments(@Path("id")String id);
 
+    @GET("project/{id}/trip")
+    Observable<List<Trip>> getTrips (@Path("id") String projectId);
 
     @POST("project/{id}/comment")
     Observable<SubmitCommentResponse> submitComment(@Body SubmitComment comment, @Path("id")String id);
-
-    @GET("project/{id}/trip")
-    Observable<List<Trip>> getTrips (@Path("id") String projectId);
 
     @POST("project/{id}/trip")
     Observable<TripResponse> postTrip (@Body TripRequest tripRequest, @Path("id") String projectId);
@@ -55,4 +49,9 @@ public interface IRoutes {
 
     @POST("project/{id}/add")
     Observable<Boolean> addPeopleToProject (@Body AddPeopleToProjectRequest ppl, @Path("id") String projectId);
+
+    @POST("login")
+    Observable<LoginResponse> login(@Body LoginRequest loginResponse);
+    @POST("register")
+    Observable<LoginResponse> register(@Body LoginRequest loginResponse);
 }

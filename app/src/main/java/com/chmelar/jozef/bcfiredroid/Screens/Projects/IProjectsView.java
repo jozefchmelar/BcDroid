@@ -1,6 +1,5 @@
 package com.chmelar.jozef.bcfiredroid.Screens.Projects;
 
-
 import com.chmelar.jozef.bcfiredroid.API.Model.Project;
 
 public interface IProjectsView {

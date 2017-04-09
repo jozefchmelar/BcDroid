@@ -1,7 +1,6 @@
 package com.chmelar.jozef.bcfiredroid.API.Model;
 
 
-import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -29,10 +28,10 @@ public class User implements Serializable {
         return getFirstName() + " " + getLastName();
     }
 
-    public String getFirstName(){
+    private String getFirstName(){
         return Character.toUpperCase(firstName.charAt(0)) + firstName.substring(1);
     }
-    public String getLastName(){
+    private String getLastName(){
         return Character.toUpperCase(lastName.charAt(0)) + lastName.substring(1);
     }
 }
